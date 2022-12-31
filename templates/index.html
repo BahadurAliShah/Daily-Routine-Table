@@ -126,6 +126,10 @@
                     width: 100%;
                 }
             }
+
+            .table-border {
+                border: 1px solid black;
+            }
         </style>
     </head>
     <body>
@@ -133,25 +137,23 @@
             <h1 class="bg-primary col-12 text-center pb-0 mb-0">
                 Dailies
             </h1>
-            <table class="table-bordered col-12 text-center">
+            <table class="table-border col-12 text-center" >
                 <thead>
-                    <tr>
-                        <th class="bg-dark text-white text-center">Week</th>
-                        <th class="mondayColumn">Monday</th>
-                        <th class="tuesdayColumn">Tuesday</th>
-                        <th class="wednesdayColumn">Wednesday</th>
-                        <th class="thursdayColumn">Thursday</th>
-                        <th class="fridayColumn">Friday</th>
-                        <th class="saturdayColumn">Saturday</th>
-                        <th class="sundayColumn">Sunday</th>
-                        <th>
-                            <a type="button" class="btn btn-primary text-white" onclick="document.getElementById('DailiesForm').style.display='block'">
+                    <tr style="height: 40px">
+                        <th class="table-border bg-dark text-white text-center">Week</th>
+                        <th class="table-border mondayColumn">Monday</th>
+                        <th class="table-border tuesdayColumn">Tuesday</th>
+                        <th class="table-border wednesdayColumn">Wednesday</th>
+                        <th class="table-border thursdayColumn">Thursday</th>
+                        <th class="table-border fridayColumn">Friday</th>
+                        <th class="table-border saturdayColumn">Saturday</th>
+                        <th class="table-border sundayColumn">Sunday</th>
+                        <th class="table-border btn-primary text-white" onclick="document.getElementById('DailiesForm').style.display='block'">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
                                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
                                 </svg>
                                 <span class="visually-hidden">Add</span>
-                            </a>
                         </th>
                     </tr>
                 </thead>
@@ -245,13 +247,7 @@
         </div>
     </body>
 <script>
-    function toggleCheckbox(event) {
-        const checkbox = event.target;
-        const row = checkbox.parentNode.parentNode;
-        const taskId = row.getAttribute('data-task-id');
-        const day = checkbox.getAttribute('data-day');
-        const index = checkbox.getAttribute('data-index');
-        const isChecked = checkbox.checked;
+    function toggleCheckbox(day, index, id, value) {
         const settings = {
             method: 'POST',
             headers: {
@@ -259,17 +255,24 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                taskId: taskId,
+                taskId: id,
                 day: day,
                 index: index,
-                isChecked: isChecked
+                isChecked: value=='0'
             })
         };
         fetch('/api/dailies', settings)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                getDailies();
             });
+    }
+
+    function createCheckBox(day, array, id) {
+        return array.map((value, index) => {
+            return `<a class="" onclick="toggleCheckbox(day='${day}', index=${index}, id=${id}, value='${value}')"><i class="bi ${value == '1' ? 'bi-check2-square' : 'bi-app'}"></i></a>`
+        }).join('');
     }
 
     function getDailies() {
@@ -287,49 +290,33 @@
             const tableRow = document.createElement('tr');
             tableRow.setAttribute('data-task-id', row.id);
             tableRow.innerHTML = `
-                <td class="titleColumn">${row.title}</td>
-                <td class="mondayColumn">
-                ${row.monday.map( (checkbox, index) => {
-                    return `<input type="checkbox" data-day="monday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
-                }).join('')}
+                <td class="table-border titleColumn">${row.title}</td>
+                <td class="table-border mondayColumn">
+                ${createCheckBox(day='monday', array=row.monday, id=row.id)}
                 </td>
-                <td class="tuesdayColumn">
-                ${row.tuesday.map( (checkbox, index) => {
-                    return `<input type="checkbox" data-day="tuesday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
-                }).join('')}
+                <td class="table-border tuesdayColumn">
+                ${createCheckBox(day='tuesday', array=row.tuesday, id=row.id)}
                 </td>
-                <td class="wednesdayColumn">
-                ${row.wednesday.map( (checkbox, index) => {
-                    return `<input type="checkbox" data-day="wednesday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
-                }).join('')}
+                <td class="table-border wednesdayColumn">
+                ${createCheckBox(day='wednesday', array=row.wednesday, id=row.id)}
                 </td>
-                <td class="thursdayColumn">
-                ${row.thursday.map( (checkbox, index) => {
-                    return `<input type="checkbox" data-day="thursday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
-                }).join('')}
+                <td class="table-border thursdayColumn">
+                ${createCheckBox(day='thursday', array=row.thursday, id=row.id)}
                 </td>
-                <td class="fridayColumn">
-                ${row.friday.map( (checkbox, index) => {
-                    return `<input type="checkbox" data-day="friday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
-                }).join('')}
+                <td class="table-border fridayColumn">
+                ${createCheckBox(day='friday', array=row.friday, id=row.id)}
                 </td>
-                <td class="saturdayColumn">
-                ${row.saturday.map( (checkbox, index) => {
-                    return `<input type="checkbox" data-day="saturday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
-                }).join('')}
+                <td class="table-border saturdayColumn">
+                ${createCheckBox(day='saturday', array=row.saturday, id=row.id)}
                 </td>
-                <td class="sundayColumn">
-                ${row.sunday.map( (checkbox, index) => {
-                    return `<input type="checkbox" data-day="sunday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
-                }).join('')}
+                <td class="table-border sundayColumn">
+                ${createCheckBox(day='sunday', array=row.sunday, id=row.id)}
                 </td>
 
-                <td>
-                    <button type="button" class="btn btn-danger" onclick="deleteTask(${row.id})">
+                <td class="table-border btn-danger" onclick="deleteTask(${row.id})">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                           <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"></path>
                       </svg>
-                    </button>
                 </td>
             `;
             tableBody.appendChild(tableRow);
@@ -339,7 +326,6 @@
             checkbox.addEventListener('change', toggleCheckbox);
         });
     }
-    getDailies();
 
     function deleteTask(id) {
         const settings = {
@@ -407,5 +393,7 @@
             modal.style.display = "none";
         }
     }
+
+    getDailies();
 </script>
 </html>
