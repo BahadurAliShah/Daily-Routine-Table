@@ -61,19 +61,19 @@ class Dailies(Resource):
         try:
             data = request.get_json()
             title = data['title']
-            monday = ['0' * int(data['monday'])]
+            monday = ['0' for i in range(int(data['monday']))]
             monday = ','.join(monday)
-            tuesday = ['0' * int(data['tuesday'])]
+            tuesday = ['0' for i in range(int(data['tuesday']))]
             tuesday = ','.join(tuesday)
-            wednesday = ['0' * int(data['wednesday'])]
+            wednesday = ['0' for i in range(int(data['wednesday']))]
             wednesday = ','.join(wednesday)
-            thursday = ['0' * int(data['thursday'])]
+            thursday = ['0' for i in range(int(data['thursday']))]
             thursday = ','.join(thursday)
-            friday = ['0' * int(data['friday'])]
+            friday = ['0' for i in range(int(data['friday']))]
             friday = ','.join(friday)
-            saturday = ['0' * int(data['saturday'])]
+            saturday = ['0' for i in range(int(data['saturday']))]
             saturday = ','.join(saturday)
-            sunday = ['0' * int(data['sunday'])]
+            sunday = ['0' for i in range(int(data['sunday']))]
             sunday = ','.join(sunday)
 
             query = f"INSERT INTO dailies (title, monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES ('{title}', '{monday}', '{tuesday}', '{wednesday}', '{thursday}', '{friday}', '{saturday}', '{sunday}')"
