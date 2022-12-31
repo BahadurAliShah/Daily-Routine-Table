@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_restful import Resource, Api
-from Models.Dailies import Dailies
+from Models import Dailies, Sections, Notes
 
 
 app = Flask(__name__)
@@ -8,6 +8,9 @@ api = Api(app)
 app.config['DEBUG'] = True
 
 api.add_resource(Dailies, '/api/dailies')
+api.add_resource(Sections, '/api/sections')
+api.add_resource(Notes, '/api/notes')
+
 
 @app.route('/')
 def index():

@@ -6,131 +6,8 @@
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        <style>
-            .titleColumn {
-                background-color: white;
-                color: black;
-                text-align: left;
-            }
-            .mondayColumn {
-                background-color: #ff989a;
-                color: black;
-            }
-            .tuesdayColumn {
-                background-color: #fde0ce;
-                color: black;
-            }
-            .wednesdayColumn {
-                background-color: #fdf1ca;
-                color: black;
-            }
-            .thursdayColumn {
-                background-color: #d7e9ce;
-                color: black;
-            }
-            .fridayColumn {
-                background-color: #cfe2f3;
-                color: black;
-            }
-            .saturdayColumn {
-                background-color: #dad0e9;
-                color: black;
-            }
-            .sundayColumn {
-                background-color: #e4d1d6;
-                color: black;
-            }
-            input[type=text],
-            input[type=password] {
-                width: 100%;
-                padding: 12px 20px;
-                margin: 8px 0;
-                display: inline-block;
-                border: 2px solid #ccc;
-                box-sizing: border-box;
-            }
-            /* set a style for all buttons*/
-            button {
-                background-color: green;
-                color: white;
-                padding: 14px 20px;
-                margin: 8px 0;
-                cursor: pointer;
-                width: 100%;
-            }
-            /*set styles for the cancel button*/
-            .cancelbtn {
-                padding: 14px 20px;
-                background-color: #FF2E00;
-            }
-            /*float cancel and signup buttons and add an equal width*/
-            .cancelbtn,
-            .signupbtn {
-                float: left;
-                width: 50%
-            }
-            /*add padding to container elements*/
-            .container {
-                padding: 16px;
-            }
-            /*define the modal’s background*/
-
-            .modal {
-                display: none;
-                position: fixed;
-                z-index: 1;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                overflow: auto;
-                background-color: rgb(0, 0, 0);
-                background-color: rgba(0, 0, 0, 0.4);
-                padding-top: 60px;
-            }
-            /*define the modal-content background*/
-
-            .modal-content {
-                background-color: #fefefe;
-                margin: 5% auto 15% auto;
-                border: 1px solid #888;
-                width: 80%;
-            }
-            /*define the close button*/
-
-            .close {
-                position: absolute;
-                right: 35px;
-                top: 15px;
-                color: #000;
-                font-size: 40px;
-                font-weight: bold;
-            }
-            /*define the close hover and focus effects*/
-
-            .close:hover,
-            .close:focus {
-                color: red;
-                cursor: pointer;
-            }
-
-            .clearfix::after {
-                content: "";
-                clear: both;
-                display: table;
-            }
-
-            @media screen and (max-width: 300px) {
-                .cancelbtn,
-                .signupbtn {
-                    width: 100%;
-                }
-            }
-
-            .table-border {
-                border: 1px solid black;
-            }
-        </style>
+        <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='styles/styles.css')}}">
+        <script src="{{url_for('static', filename='scripts/main.js')}}"></script>
     </head>
     <body>
         <div class="container-fluid mx-0 px-0">
@@ -148,7 +25,7 @@
                         <th class="table-border fridayColumn">Friday</th>
                         <th class="table-border saturdayColumn">Saturday</th>
                         <th class="table-border sundayColumn">Sunday</th>
-                        <th class="table-border btn-primary text-white" onclick="document.getElementById('DailiesForm').style.display='block'">
+                        <th class="table-border btn-primary text-white" onclick="displayModal('DailiesForm')">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
                                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
@@ -168,6 +45,13 @@
                     <label><b>Title</b></label>
                     <input type="text" placeholder="Enter Title" id="FormTitle" required>
 
+                    <div class="container-fluid">
+                        <label class="col-2"><b>Select Section</b></label>
+                        <select class="form-select form-select-lg mb-3 col-3" aria-label=".form-select-lg example" id="FormSection">
+                        </select>
+                    </div>
+
+                    <h4 class="col-12 text-center my-3">How Many Times A day</h4>
                     <div class="container-fluid">
                     <label class="col-2"><b>Monday</b></label>
                         <select class="form-select form-select-lg mb-3 col-3" aria-label=".form-select-lg example" id="FormMonday">
@@ -245,155 +129,28 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="container">
+            <hr class="featurette-divider border-dark">
+            <h5>Add a new Section</h5>
+                <div class="d-inline">
+                    <label for="SectionName">Section Name</label>
+                    <input type="text" name="SectionName" id="SectionName" placeholder="Enter New Section" />
+                </div>
+                <div class="d-inline">
+                    <button class="btn btn-primary d-inline col-3" onclick="addNewSection()">Add New Section</button>
+                    <button class="btn btn-danger d-inline col-3" onclick="RemoveSection()">Delete Section</button>
+                </div>
+        </div>
     </body>
 <script>
-    function toggleCheckbox(day, index, id, value) {
-        const settings = {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                taskId: id,
-                day: day,
-                index: index,
-                isChecked: value=='0'
-            })
-        };
-        fetch('/api/dailies', settings)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                getDailies();
-            });
-    }
-
-    function createCheckBox(day, array, id) {
-        return array.map((value, index) => {
-            return `<a class="" onclick="toggleCheckbox(day='${day}', index=${index}, id=${id}, value='${value}')"><i class="bi ${value == '1' ? 'bi-check2-square' : 'bi-app'}"></i></a>`
-        }).join('');
-    }
-
-    function getDailies() {
-        fetch('/api/dailies', { method: 'GET' })
-            .then(response => response.json())
-            .then(res => {
-                SetDailies(res);
-            })
-    }
-
-    function SetDailies( tableData ){
-        const tableBody = document.getElementById('dailiesBody');
-        tableBody.innerHTML = '';
-        tableData.forEach( (row, rowIndex) => {
-            const tableRow = document.createElement('tr');
-            tableRow.setAttribute('data-task-id', row.id);
-            tableRow.innerHTML = `
-                <td class="table-border titleColumn">${row.title}</td>
-                <td class="table-border mondayColumn">
-                ${createCheckBox(day='monday', array=row.monday, id=row.id)}
-                </td>
-                <td class="table-border tuesdayColumn">
-                ${createCheckBox(day='tuesday', array=row.tuesday, id=row.id)}
-                </td>
-                <td class="table-border wednesdayColumn">
-                ${createCheckBox(day='wednesday', array=row.wednesday, id=row.id)}
-                </td>
-                <td class="table-border thursdayColumn">
-                ${createCheckBox(day='thursday', array=row.thursday, id=row.id)}
-                </td>
-                <td class="table-border fridayColumn">
-                ${createCheckBox(day='friday', array=row.friday, id=row.id)}
-                </td>
-                <td class="table-border saturdayColumn">
-                ${createCheckBox(day='saturday', array=row.saturday, id=row.id)}
-                </td>
-                <td class="table-border sundayColumn">
-                ${createCheckBox(day='sunday', array=row.sunday, id=row.id)}
-                </td>
-
-                <td class="table-border btn-danger" onclick="deleteTask(${row.id})">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"></path>
-                      </svg>
-                </td>
-            `;
-            tableBody.appendChild(tableRow);
-        });
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach( checkbox => {
-            checkbox.addEventListener('change', toggleCheckbox);
-        });
-    }
-
-    function deleteTask(id) {
-        const settings = {
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                taskId: id
-            })
-        };
-        console.log(settings);
-        fetch('/api/dailies', settings)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                getDailies();
-            });
-    }
-
-    function AddTask() {
-        document.getElementById('DailiesForm').style.display='none';
-
-        const title = document.getElementById('FormTitle').value;
-        document.getElementById('FormTitle').value = '';
-        const monday = document.getElementById('FormMonday').value;
-        const tuesday = document.getElementById('FormTuesday').value;
-        const wednesday = document.getElementById('FormWednesday').value;
-        const thursday = document.getElementById('FormThursday').value;
-        const friday = document.getElementById('FormFriday').value;
-        const saturday = document.getElementById('FormSaturday').value;
-        const sunday = document.getElementById('FormSunday').value;
-
-        const settings = {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                title: title,
-                monday: monday,
-                tuesday: tuesday,
-                wednesday: wednesday,
-                thursday: thursday,
-                friday: friday,
-                saturday: saturday,
-                sunday: sunday
-            })
-        };
-
-        fetch('/api/dailies', settings)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                getDailies();
-            });
-    }
-
     var modal = document.getElementById('DailiesForm');
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     }
-
-    getDailies();
 </script>
 </html>
