@@ -2,6 +2,7 @@
     <head>
         <title>My First Template</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -39,6 +40,92 @@
                 background-color: #e4d1d6;
                 color: black;
             }
+            input[type=text],
+            input[type=password] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 2px solid #ccc;
+                box-sizing: border-box;
+            }
+            /* set a style for all buttons*/
+            button {
+                background-color: green;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                cursor: pointer;
+                width: 100%;
+            }
+            /*set styles for the cancel button*/
+            .cancelbtn {
+                padding: 14px 20px;
+                background-color: #FF2E00;
+            }
+            /*float cancel and signup buttons and add an equal width*/
+            .cancelbtn,
+            .signupbtn {
+                float: left;
+                width: 50%
+            }
+            /*add padding to container elements*/
+            .container {
+                padding: 16px;
+            }
+            /*define the modal’s background*/
+
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgb(0, 0, 0);
+                background-color: rgba(0, 0, 0, 0.4);
+                padding-top: 60px;
+            }
+            /*define the modal-content background*/
+
+            .modal-content {
+                background-color: #fefefe;
+                margin: 5% auto 15% auto;
+                border: 1px solid #888;
+                width: 80%;
+            }
+            /*define the close button*/
+
+            .close {
+                position: absolute;
+                right: 35px;
+                top: 15px;
+                color: #000;
+                font-size: 40px;
+                font-weight: bold;
+            }
+            /*define the close hover and focus effects*/
+
+            .close:hover,
+            .close:focus {
+                color: red;
+                cursor: pointer;
+            }
+
+            .clearfix::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+            @media screen and (max-width: 300px) {
+                .cancelbtn,
+                .signupbtn {
+                    width: 100%;
+                }
+            }
         </style>
     </head>
     <body>
@@ -57,11 +144,104 @@
                         <th class="fridayColumn">Friday</th>
                         <th class="saturdayColumn">Saturday</th>
                         <th class="sundayColumn">Sunday</th>
+                        <th>
+                            <a type="button" class="btn btn-primary text-white" onclick="document.getElementById('DailiesForm').style.display='block'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                                </svg>
+                                <span class="visually-hidden">Add</span>
+                            </a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody id="dailiesBody">
                 </tbody>
             </table>
+        </div>
+        <div id="DailiesForm" class="modal">
+            <span onclick="document.getElementById('DailiesForm').style.display='none'" class="close" title="Close Modal">×</span>
+            <div class="modal-content animate">
+                <div class="container">
+                    <label><b>Title</b></label>
+                    <input type="text" placeholder="Enter Title" id="FormTitle" required>
+
+                    <div class="container-fluid">
+                    <label class="col-2"><b>Monday</b></label>
+                        <select class="form-select form-select-lg mb-3 col-3" aria-label=".form-select-lg example" id="FormMonday">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="container-fluid">
+                        <label class="col-2"><b>Tuesday</b></label>
+                        <select class="form-select form-select-lg mb-3 col-3" aria-label=".form-select-lg example" id="FormTuesday">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="container-fluid">
+                        <label class="col-2"><b>Wednesday</b></label>
+                        <select class="form-select form-select-lg mb-3 col-3" aria-label=".form-select-lg example" id="FormWednesday">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="container-fluid">
+                        <label class="col-2"><b>Thursday</b></label>
+                        <select class="form-select form-select-lg mb-3 col-3" aria-label=".form-select-lg example" id="FormThursday">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="container-fluid">
+                        <label class="col-2"><b>Friday</b></label>
+                        <select class="form-select form-select-lg mb-3 col-3" aria-label=".form-select-lg example" id="FormFriday">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="container-fluid">
+                        <label class="col-2"><b>Saturday</b></label>
+                        <select class="form-select form-select-lg mb-3 col-3" aria-label=".form-select-lg example" id="FormSaturday">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="container-fluid">
+                        <label class="col-2"><b>Sunday</b></label>
+                        <select class="form-select form-select-lg mb-3 col-3" aria-label=".form-select-lg example" id="FormSunday">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="clearfix">
+                        <button type="button" onclick="document.getElementById('DailiesForm').style.display='none'" class="cancelbtn">Cancel</button>
+                        <button class="signupbtn" onclick="AddTask()">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 <script>
@@ -72,118 +252,160 @@
         const day = checkbox.getAttribute('data-day');
         const index = checkbox.getAttribute('data-index');
         const isChecked = checkbox.checked;
-        const body = {
-            taskId: taskId,
-            day: day,
-            index: index,
-            isChecked: isChecked
-        };
-        console.log(body);
-        fetch('/api/dailies', {
+        const settings = {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body
-        });
+            body: JSON.stringify({
+                taskId: taskId,
+                day: day,
+                index: index,
+                isChecked: isChecked
+            })
+        };
+        fetch('/api/dailies', settings)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            });
     }
 
-    const tableData = [
-        {
-            title: 'Brush Teeth',
-            monday: [1, 0, 0, 1, 0],
-            tuesday: [0, 0, 0, 0, 0],
-            wednesday: [0, 0, 0, 0, 0],
-            thursday: [0, 0, 0, 0, 0],
-            friday: [0, 0, 0, 0, 0],
-            saturday: [0, 0, 0, 0, 0],
-            sunday: [0, 0, 0, 0, 0]
-        },
-        {
-            title: 'Make Bed',
-            monday: [0, 0, 0, 0, 0],
-            tuesday: [0, 0, 0, 0, 0],
-            wednesday: [0, 0, 0, 0, 0],
-            thursday: [0, 0, 0, 0, 0],
-            friday: [0, 0, 0, 0, 0],
-            saturday: [0, 0, 0, 0, 0],
-            sunday: [0, 0, 0, 0, 0]
-        },
-        {
-            title: 'Get Dressed',
-            monday: [0, 0, 0, 0, 0],
-            tuesday: [0, 0, 0, 0, 0],
-            wednesday: [0, 0, 0, 0, 0],
-            thursday: [0, 0, 0, 0, 0],
-            friday: [0, 0, 0, 0, 0],
-            saturday: [0, 0, 0, 0, 0],
-            sunday: [0, 0, 0, 0, 0]
-        },
-        {
-            title: 'Eat Breakfast',
-            monday: [0, 0, 0, 0, 0],
-            tuesday: [0, 0, 0, 0, 0],
-            wednesday: [0, 0, 0, 0, 0],
-            thursday: [0, 0, 0, 0, 0],
-            friday: [0, 0, 0, 0, 0],
-            saturday: [0, 0, 0, 0, 0],
-            sunday: [0, 0, 0, 0, 0]
-        },
-        {
-            title: 'Brush Hair',
-            monday: [0, 0, 0, 0, 0],
-            tuesday: [0, 0, 0, 0, 0],
-            wednesday: [0, 0, 0, 0, 0],
-            thursday: [0, 0, 0, 0, 0],
-            friday: [0, 0, 0, 0, 0],
-            saturday: [0, 0, 0, 0, 0],
-            sunday: [0, 0, 0, 0, 0]
-        }
-    ];
+    function getDailies() {
+        fetch('/api/dailies', { method: 'GET' })
+            .then(response => response.json())
+            .then(res => {
+                SetDailies(res);
+            })
+    }
 
-    const dailiesBody = document.getElementById('dailiesBody')
-    tableData.forEach((row) => {
-        const rowElement = document.createElement('tr')
-        rowElement.setAttribute('data-task-id', row.title)
-        rowElement.innerHTML = `
-            <td class="titleColumn">${row.title}</td>
-            <td class="mondayColumn">
-                ${ row.monday.map((isChecked, index) => {
-                    return `<input type="checkbox" data-day="monday" data-index="${index}" ${isChecked ? 'checked' : ''} onchange="toggleCheckbox(event)">`
-                }).join('') }
-            </td>
-            <td class="tuesdayColumn">
-                ${ row.tuesday.map((isChecked, index) => {
-                    return `<input type="checkbox" data-day="tuesday" data-index="${index}" ${isChecked ? 'checked' : ''} onchange="toggleCheckbox(event)">`
-                }).join('') }
-            </td>
-            <td class="wednesdayColumn">
-                ${ row.wednesday.map((isChecked, index) => {
-                    return `<input type="checkbox" data-day="wednesday" data-index="${index}" ${isChecked ? 'checked' : ''} onchange="toggleCheckbox(event)">`
-                }).join('') }
-            </td>
-            <td class="thursdayColumn">
-                ${ row.thursday.map((isChecked, index) => {
-                    return `<input type="checkbox" data-day="thursday" data-index="${index}" ${isChecked ? 'checked' : ''} onchange="toggleCheckbox(event)">`
-                }).join('') }
-            </td>
-            <td class="fridayColumn">
-                ${ row.friday.map((isChecked, index) => {
-                    return `<input type="checkbox" data-day="friday" data-index="${index}" ${isChecked ? 'checked' : ''} onchange="toggleCheckbox(event)">`
-                }).join('') }
-            </td>
-            <td class="saturdayColumn">
-                ${ row.saturday.map((isChecked, index) => {
-                    return `<input type="checkbox" data-day="saturday" data-index="${index}" ${isChecked ? 'checked' : ''} onchange="toggleCheckbox(event)">`
-                }).join('') }
-            </td>
-            <td class="sundayColumn">
-                ${ row.sunday.map((isChecked, index) => {
-                    return `<input type="checkbox" data-day="sunday" data-index="${index}" ${isChecked ? 'checked' : ''} onchange="toggleCheckbox(event)">`
-                }).join('') }
-            </td>
-        `
-        dailiesBody.appendChild(rowElement)
-    });
+    function SetDailies( tableData ){
+        const tableBody = document.getElementById('dailiesBody');
+        tableBody.innerHTML = '';
+        tableData.forEach( (row, rowIndex) => {
+            const tableRow = document.createElement('tr');
+            tableRow.setAttribute('data-task-id', row.id);
+            tableRow.innerHTML = `
+                <td class="titleColumn">${row.title}</td>
+                <td class="mondayColumn">
+                ${row.monday.map( (checkbox, index) => {
+                    return `<input type="checkbox" data-day="monday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
+                }).join('')}
+                </td>
+                <td class="tuesdayColumn">
+                ${row.tuesday.map( (checkbox, index) => {
+                    return `<input type="checkbox" data-day="tuesday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
+                }).join('')}
+                </td>
+                <td class="wednesdayColumn">
+                ${row.wednesday.map( (checkbox, index) => {
+                    return `<input type="checkbox" data-day="wednesday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
+                }).join('')}
+                </td>
+                <td class="thursdayColumn">
+                ${row.thursday.map( (checkbox, index) => {
+                    return `<input type="checkbox" data-day="thursday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
+                }).join('')}
+                </td>
+                <td class="fridayColumn">
+                ${row.friday.map( (checkbox, index) => {
+                    return `<input type="checkbox" data-day="friday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
+                }).join('')}
+                </td>
+                <td class="saturdayColumn">
+                ${row.saturday.map( (checkbox, index) => {
+                    return `<input type="checkbox" data-day="saturday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
+                }).join('')}
+                </td>
+                <td class="sundayColumn">
+                ${row.sunday.map( (checkbox, index) => {
+                    return `<input type="checkbox" data-day="sunday" data-index="${index}" ${checkbox == '1' ? 'checked' : ''} onclick="toggleCheckbox(event)"/>`
+                }).join('')}
+                </td>
+
+                <td>
+                    <button type="button" class="btn btn-danger" onclick="deleteTask(${row.id})">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"></path>
+                      </svg>
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(tableRow);
+        });
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach( checkbox => {
+            checkbox.addEventListener('change', toggleCheckbox);
+        });
+    }
+    getDailies();
+
+    function deleteTask(id) {
+        const settings = {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                taskId: id
+            })
+        };
+        console.log(settings);
+        fetch('/api/dailies', settings)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                getDailies();
+            });
+    }
+
+    function AddTask() {
+        document.getElementById('DailiesForm').style.display='none';
+
+        const title = document.getElementById('FormTitle').value;
+        document.getElementById('FormTitle').value = '';
+        const monday = document.getElementById('FormMonday').value;
+        const tuesday = document.getElementById('FormTuesday').value;
+        const wednesday = document.getElementById('FormWednesday').value;
+        const thursday = document.getElementById('FormThursday').value;
+        const friday = document.getElementById('FormFriday').value;
+        const saturday = document.getElementById('FormSaturday').value;
+        const sunday = document.getElementById('FormSunday').value;
+
+        const settings = {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: title,
+                monday: monday,
+                tuesday: tuesday,
+                wednesday: wednesday,
+                thursday: thursday,
+                friday: friday,
+                saturday: saturday,
+                sunday: sunday
+            })
+        };
+
+        fetch('/api/dailies', settings)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                getDailies();
+            });
+    }
+
+    var modal = document.getElementById('DailiesForm');
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
 </html>
