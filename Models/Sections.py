@@ -29,6 +29,7 @@ class Sections(Resource):
                 return {'message': 'Section not found'}, 404
             conn.execute("DELETE FROM sections WHERE type = ?", (type,))
             conn.execute("DELETE FROM notes WHERE type = ?", (type,))
+            conn.execute("DELETE FROM dailies WHERE type = ?", (type,))
             conn.commit()
             return {'message': 'Section deleted successfully'}, 200
         except Exception as e:
