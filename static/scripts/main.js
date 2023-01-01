@@ -1,10 +1,12 @@
+const NoOfWeeks = 25;
+var currentWeek = 0;
+
 function displayModal(id) {
     var sesctions = [];
-    fetch('/api/dailies', {method: 'GET'})
+    fetch('/api/dailies/'+currentWeek, {method: 'GET'})
         .then(response => response.json())
         .then(res => {
             sesctions = res['sections'];
-            console.log(sesctions);
             const formSection = document.getElementById('FormSection');
             formSection.innerHTML = '';
 
@@ -29,7 +31,8 @@ function toggleCheckbox(day, index, id, value) {
             taskId: id,
             day: day,
             index: index,
-            isChecked: value == '0'
+            isChecked: value == '0',
+            week: currentWeek
         })
     };
     fetch('/api/dailies', settings)
@@ -46,8 +49,9 @@ function createCheckBox(day, array, id) {
     }).join('');
 }
 
-function getDailies() {
-    fetch('/api/dailies', {method: 'GET'})
+function getDailies(week = currentWeek) {
+    currentWeek = week;
+    fetch('/api/dailies/'+week, {method: 'GET'})
         .then(response => response.json())
         .then(res => {
             console.log(res);
@@ -56,6 +60,7 @@ function getDailies() {
 }
 
 function SetDailies(res) {
+    document.getElementById('weekNumber').innerHTML = `Week ${currentWeek + 1}/${NoOfWeeks}`;
     const tableBody = document.getElementById('dailiesBody');
     tableBody.innerHTML = '';
     res['sections'].forEach((section, sectionIndex) => {
@@ -253,6 +258,7 @@ function updateNotes(type, rowID) {
         body: JSON.stringify({
             type: type,
             id: rowID,
+            week: currentWeek,
             monday: monday,
             tuesday: tuesday,
             wednesday: wednesday,
@@ -270,5 +276,19 @@ function updateNotes(type, rowID) {
     });
 }
 
+function paginationList() {
+    const pagination = document.getElementById('paginationList');
+    console.log(pagination);
+    if (pagination) {
+        pagination.innerHTML = '';
+        for (let i = 0; i < NoOfWeeks; i++) {
+            const li = document.createElement('li');
+            li.classList.add('page-item');
+            li.innerHTML = `<button class="page-link" onclick="getDailies(${i})">${i + 1}</button>`;
+            pagination.appendChild(li);
+        }
+    }
+}
 
 getDailies();
+setTimeout(paginationList, 100);

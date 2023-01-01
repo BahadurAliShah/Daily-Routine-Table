@@ -17,7 +17,7 @@
             <table class="table-border col-12 text-center" >
                 <thead>
                     <tr style="height: 40px">
-                        <th class="table-border bg-dark text-white text-center">Week</th>
+                        <th class="table-border bg-dark text-white text-center" id="weekNumber"></th>
                         <th class="table-border mondayColumn">Monday</th>
                         <th class="table-border tuesdayColumn">Tuesday</th>
                         <th class="table-border wednesdayColumn">Wednesday</th>
@@ -130,8 +130,13 @@
             </div>
         </div>
 
+<!--        Pagination Section          -->
+        <nav aria-label="Page navigation example" class="mb-0">
+            <ul class="pagination justify-content-center" id="paginationList">
+            </ul>
+        </nav>
 
-        <div class="container">
+        <div class="container mt-0">
             <hr class="featurette-divider border-dark">
             <h5>Add a new Section</h5>
                 <div class="d-inline">

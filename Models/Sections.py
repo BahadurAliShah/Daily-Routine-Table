@@ -1,5 +1,6 @@
 from flask_restful import Resource, Api, request
 from db import conn
+from .constants import Days, TotalWeeks
 
 
 class Sections(Resource):
@@ -10,7 +11,7 @@ class Sections(Resource):
             sections = conn.execute("SELECT * FROM sections WHERE type = ?", (type,)).fetchall()
             if len(sections) > 0:
                 return {'message': 'Section already exists'}, 400
-            conn.execute("INSERT INTO Notes (type, monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (type, '', '', '', '', '', '', ''))
+            conn.execute("INSERT INTO Notes (type, monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (type, chr(255)*TotalWeeks, chr(255)*TotalWeeks, chr(255)*TotalWeeks, chr(255)*TotalWeeks, chr(255)*TotalWeeks, chr(255)*TotalWeeks, chr(255)*TotalWeeks))
             notesId = conn.execute("SELECT id FROM Notes WHERE type = ?", (type,)).fetchall()[0][0]
             conn.execute("INSERT INTO Sections (type, notesId) VALUES (?, ?)", (type, notesId))
             conn.commit()
